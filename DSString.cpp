@@ -5,7 +5,6 @@
 #include "DSString.h"
 
 DSString::DSString() {
-    this->str = new char[0];
     this->length = 0;
 }
 
@@ -26,14 +25,13 @@ DSString::~DSString() {
 }
 
 DSString &DSString::operator=(const char *str) {
-    delete[] this->str;
     *this = DSString(str);
     return *this;
 }
 
 DSString &DSString::operator=(const DSString &ds_string) {
     if (this == &ds_string) return *this;
-    delete[] this->str;
+    delete[] this->str; // TODO Note: A double deletion occurs when &DSString::operator=(const char *str) is called
     *this = DSString(ds_string);
     return *this;
 }
@@ -76,6 +74,7 @@ DSString DSString::substring(int start, int numChars) {
     sub_ds_string.length = numChars;
     sub_ds_string.str = new char[numChars];
     memcpy(sub_ds_string.str, this->str + start, numChars);
+    return sub_ds_string;
 }
 
 // This leaks the char[] and should be avoided
