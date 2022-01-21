@@ -31,7 +31,7 @@ DSString &DSString::operator=(const char *str) {
 
 DSString &DSString::operator=(const DSString &ds_string) {
     if (this == &ds_string) return *this;
-    delete[] this->str; // TODO Note: A double deletion occurs when &DSString::operator=(const char *str) is called
+    if (!this->str) delete[] this->str;
     *this = DSString(ds_string);
     return *this;
 }
