@@ -11,6 +11,8 @@
 class DSString{
 
 private:
+    char *str;
+    size_t length;
     /**
      *  You will need to add some private data members here.
      *  This is up to your discretion.  However, we **strongly**
