@@ -47,6 +47,37 @@ DSString DSString::operator+(const DSString &ds_string) {
     return complete_ds_string;
 }
 
+bool DSString::operator==(const char *str) {
+    return !memcmp(this->str, str, this->length);
+}
+
+bool DSString::operator==(const DSString &ds_string) {
+    return !memcmp(this->str, ds_string.str, this->length);
+}
+
+bool DSString::operator>(const DSString &ds_string) {
+    return memcmp(this->str, ds_string.str, this->length) > 0;
+}
+
+bool DSString::operator>(const char *str) {
+    return memcmp(this->str, str, this->length) > 0;
+}
+
+int DSString::getLength() {
+    return (int) this->length;
+}
+
+char &DSString::operator[](const int index) {
+    return this->str[index];
+}
+
+DSString DSString::substring(int start, int numChars) {
+    DSString sub_ds_string;
+    sub_ds_string.length = numChars;
+    sub_ds_string.str = new char[numChars];
+    memcpy(sub_ds_string.str, this->str + start, numChars);
+}
+
 // This leaks the char[] and should be avoided
 char *DSString::c_str() {
     return this->str;
