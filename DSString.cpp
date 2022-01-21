@@ -10,18 +10,30 @@ DSString::DSString() {
 }
 
 DSString::DSString(const char *str) {
-    this->length = 0;
-    while (str[length++] != '\0'); //Adjust this->length to the size of str
+    this->length = strlen(str);
     this->str = new char[length];
-    for (int i = 0; i < length; ++i) this->str[i] = str[i];
+    strcpy(this->str, str);
 }
 
 DSString::DSString(const DSString &dsString) {
     this->length = dsString.length;
     this->str = new char[this->length];
-    for (int i = 0; i < length; ++i) this->str[i] = dsString.str[i];
+    strcpy(this->str, dsString.str);
 }
 
 DSString::~DSString() {
-    delete this->str;
+    delete[] this->str;
+}
+
+DSString &DSString::operator=(const char *str) {
+    delete[] this->str;
+    *this = DSString(str);
+    return *this;
+}
+
+DSString &DSString::operator=(const DSString &dsString) {
+    if (this == &dsString) return *this;
+    delete[] this->str;
+    *this = DSString(dsString);
+    return *this;
 }
