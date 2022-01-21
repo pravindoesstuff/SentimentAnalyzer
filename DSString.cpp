@@ -82,3 +82,8 @@ DSString DSString::substring(int start, int numChars) {
 char *DSString::c_str() {
     return this->str;
 }
+
+// Referenced from: https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-output-operator-for-your-own-classes
+std::ostream &operator<<(std::ostream &os, const DSString &ds_string) {
+    return os << ds_string.str;
+}
