@@ -12,13 +12,13 @@ DSString::DSString() {
 DSString::DSString(const char *str) {
     this->length = strlen(str);
     this->str = new char[length];
-    strcpy(this->str, str);
+    memcpy(this->str, str, this->length);
 }
 
-DSString::DSString(const DSString &dsString) {
-    this->length = dsString.length;
+DSString::DSString(const DSString &ds_string) {
+    this->length = ds_string.length;
     this->str = new char[this->length];
-    strcpy(this->str, dsString.str);
+    memcpy(this->str, ds_string.str, this->length);
 }
 
 DSString::~DSString() {
@@ -31,9 +31,23 @@ DSString &DSString::operator=(const char *str) {
     return *this;
 }
 
-DSString &DSString::operator=(const DSString &dsString) {
-    if (this == &dsString) return *this;
+DSString &DSString::operator=(const DSString &ds_string) {
+    if (this == &ds_string) return *this;
     delete[] this->str;
-    *this = DSString(dsString);
+    *this = DSString(ds_string);
     return *this;
+}
+
+DSString DSString::operator+(const DSString &ds_string) {
+    DSString complete_ds_string;
+    complete_ds_string.length = this->length + ds_string.length;
+    complete_ds_string.str = new char[complete_ds_string.length];
+    memcpy(complete_ds_string.str, this->str, this->length);
+    memcpy(complete_ds_string.str + this->length, ds_string.str, this->length + ds_string.length);
+    return complete_ds_string;
+}
+
+// This leaks the char[] and should be avoided
+char *DSString::c_str() {
+    return this->str;
 }
