@@ -52,11 +52,11 @@ bool DSString::operator==(const char *str) {
 }
 
 bool DSString::operator==(const DSString &ds_string) {
-    return !memcmp(this->str, ds_string.str, this->length);
+    return *this > ds_string.str;
 }
 
 bool DSString::operator>(const DSString &ds_string) {
-    return memcmp(this->str, ds_string.str, this->length) > 0;
+    return *this > ds_string.str;
 }
 
 bool DSString::operator>(const char *str) {
