@@ -3,8 +3,12 @@
 //
 
 #include "DSString.h"
+#include <iostream>
+
+using std::cout;
 
 DSString::DSString() {
+    this->str = new char[0];
     this->length = 0;
 }
 
@@ -31,13 +35,16 @@ DSString &DSString::operator=(const char *str) {
 
 DSString &DSString::operator=(const DSString &ds_string) {
     if (this == &ds_string) return *this;
-    if (!this->str) delete[] this->str;
-    *this = DSString(ds_string);
+    delete[] this->str;
+    this->str = new char[ds_string.length];
+    this->length = ds_string.length;
+    memcpy(this->str, ds_string.str, this->length);
     return *this;
 }
 
 DSString DSString::operator+(const DSString &ds_string) {
     DSString complete_ds_string;
+    delete[] complete_ds_string.str;
     complete_ds_string.length = this->length + ds_string.length;
     complete_ds_string.str = new char[complete_ds_string.length];
     memcpy(complete_ds_string.str, this->str, this->length);
@@ -71,6 +78,7 @@ char &DSString::operator[](const int index) {
 
 DSString DSString::substring(int start, int numChars) {
     DSString sub_ds_string;
+    delete[] sub_ds_string.str;
     sub_ds_string.length = numChars;
     sub_ds_string.str = new char[numChars];
     memcpy(sub_ds_string.str, this->str + start, numChars);
