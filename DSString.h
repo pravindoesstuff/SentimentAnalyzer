@@ -80,6 +80,10 @@ public:
      * getLength() returns the number (count) of characters in the string.
      **/
     int getLength();
+    /**
+     * find() returns the first occurrence of the character c (Unsafe: Always assumes there is one)
+     **/
+    size_t find(const char);
 
     /**
      * The substring method returns a string object that contains a

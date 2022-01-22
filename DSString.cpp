@@ -67,6 +67,10 @@ bool DSString::operator>(const char *str) {
     return memcmp(this->str, str, this->length) > 0;
 }
 
+size_t DSString::find(const char c) {
+    return (char *) rawmemchr(this->str, c) - this->str;
+}
+
 int DSString::getLength() {
     return (int) this->length;
 }
