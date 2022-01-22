@@ -56,7 +56,7 @@ bool DSString::operator==(const char *str) {
 }
 
 bool DSString::operator==(const DSString &ds_string) {
-    return *this > ds_string.str;
+    return *this == ds_string.str;
 }
 
 bool DSString::operator>(const DSString &ds_string) {
