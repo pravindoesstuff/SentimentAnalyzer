@@ -3,9 +3,6 @@
 //
 
 #include "DSString.h"
-#include <iostream>
-
-using std::cout;
 
 DSString::DSString() {
     this->str = new char[0];
@@ -14,7 +11,7 @@ DSString::DSString() {
 
 DSString::DSString(const char *str) {
     this->length = strlen(str);
-    this->str = new char[length];
+    this->str = new char[this->length];
     memcpy(this->str, str, this->length);
 }
 
@@ -29,15 +26,17 @@ DSString::~DSString() {
 }
 
 DSString &DSString::operator=(const char *str) {
-    *this = DSString(str);
+    this->length = strlen(str);
+    this->str = new char[this->length];
+    memcpy(this->str, str, this->length);
     return *this;
 }
 
 DSString &DSString::operator=(const DSString &ds_string) {
     if (this == &ds_string) return *this;
     delete[] this->str;
-    this->str = new char[ds_string.length];
     this->length = ds_string.length;
+    this->str = new char[this->length];
     memcpy(this->str, ds_string.str, this->length);
     return *this;
 }
