@@ -34,7 +34,7 @@ private:
      **/
 
     /// Private constructor to unsafely char[] pointers into DSString
-    DSString(char *str, size_t length);
+    DSString(const char *str, size_t length);
 
 public:
 
