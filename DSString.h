@@ -8,9 +8,11 @@
 #include <iostream>
 #include <cstring>
 
-class DSString{
+class DSString {
 
 private:
+
+
     char *str;
     size_t length;
     /**
@@ -31,6 +33,8 @@ private:
      *    the c-string functions.
      **/
 
+    /// Private constructor to unsafely char[] pointers into DSString
+    DSString(char *str, size_t length);
 
 public:
 
@@ -40,21 +44,25 @@ public:
      * Make sure you do proper memory management.
      **/
     DSString();
-    DSString(const char*);
-    DSString(const DSString&);
+
+    DSString(const char *);
+
+    DSString(const DSString &);
+
     ~DSString();
 
     /**
      * Overloaded Assignment Operators
      */
-    DSString& operator= (const char*);
-    DSString& operator= (const DSString&);
+    DSString &operator=(const char *);
+
+    DSString &operator=(const DSString &);
 
     /**
      * Overloaded non-modifying string concat
      * @return
      */
-    DSString operator+ (const DSString&);
+    DSString operator+(const DSString &);
 
     /**
      * Standard relational operators.  Feel free to add additional.
@@ -65,25 +73,29 @@ public:
      *
      **/
 
-    bool operator== (const char*);
-    bool operator== (const DSString&);
-    bool operator> (const DSString&);
-    bool operator> (const char*);
+    bool operator==(const char *);
+
+    bool operator==(const DSString &);
+
+    bool operator>(const DSString &);
+
+    bool operator>(const char *);
 
     /**
      * Subscript operator to access a particular character of a DSString object
      * @return the character requested by reference
      */
-    char& operator[] (const int);
+    char &operator[](const int);
 
     /**
      * getLength() returns the number (count) of characters in the string.
      **/
     int getLength();
+
     /**
-     * find() returns the first occurrence of the character c (Unsafe: Always assumes there is one)
+     * cleanPunctuation() Returns a DSString with all punctuation removed
      **/
-    size_t find(const char);
+    DSString cleanPunctuation();
 
     /**
      * The substring method returns a string object that contains a
@@ -100,13 +112,13 @@ public:
      * the c_str function returns a null-terminated c-string holding the
      * contents of this object.
      **/
-    char* c_str();
+    char *c_str();
 
     /**
      * Overloaded stream insertion operator to print the contents of this
      * string to the output stream in the first argument.
      **/
-    friend std::ostream& operator<< (std::ostream&, const DSString&);
+    friend std::ostream &operator<<(std::ostream &, const DSString &);
 
     //You are free to add more functionality to the class.  For example,
     //you may want to add a find(...) function that will search for a
@@ -116,7 +128,6 @@ public:
     //semester progresses.
 
 };
-
 
 
 #endif //PA01_SENTIMENT_DSSTRING_H
