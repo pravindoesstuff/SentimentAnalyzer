@@ -3,6 +3,9 @@
 //
 
 #include "DSString.h"
+#include <memory>
+
+using std::unique_ptr;
 
 DSString::DSString() {
     this->str = new char[0];
@@ -79,12 +82,12 @@ DSString DSString::cleanPunctuation() {
     for (int i = 0; i < this->length; ++i) {
         if (!ispunct(this->str[i])) ++cleaned_str_len;
     }
-    char cleaned_str[cleaned_str_len];
-    char *cleaned_str_prt = cleaned_str;
+    unique_ptr<char> cleaned_str(new char[cleaned_str_len]);
+    char *cleaned_str_ptr = cleaned_str.get();
     for (int i = 0; i < this->length; ++i) {
-        if (!ispunct(this->str[i])) *cleaned_str_prt++ = this->str[i];
+        if (!ispunct(this->str[i])) *cleaned_str_ptr++ = this->str[i];
     }
-    return {cleaned_str, cleaned_str_len};
+    return {cleaned_str.get(), cleaned_str_len};
 }
 
 int DSString::getLength() {
