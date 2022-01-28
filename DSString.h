@@ -20,7 +20,7 @@ private:
      *  This is up to your discretion.  However, we **strongly**
      *  encourage you to implement your string class as a wrapper
      *  for typical null-terminated c-strings.  In doing this, you
-     *  may use c-sting functions in the methods in this class such
+     *  may use c-string functions in the methods in this class such
      *  as:
      *    * strlen(...)
      *    * strcpy(...)
