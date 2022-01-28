@@ -4,8 +4,9 @@
 
 #include "FrequencyCollector.h"
 #include <vector>
+#include <fstream>
 
-using std::vector;
+using std::vector, std::ifstream;
 
 vector<DSString> FrequencyCollector::split_words(DSString sentence) {
     vector<DSString> words;
@@ -17,6 +18,12 @@ vector<DSString> FrequencyCollector::split_words(DSString sentence) {
     return words;
 }
 
-unordered_map<DSString, tuple<int, int>> apply_weights(DSString filename) {
-
+unordered_map<DSString, Bias> apply_weights(DSString filename) {
+    vector<DSString> tweet_lines;
+    ifstream file(filename.c_str());
+    while (!file.eof()) {
+        char line[DATA_SIZE];
+        file.getline(line, DATA_SIZE);
+        tweet_lines.emplace_back(line);
+    }
 }
