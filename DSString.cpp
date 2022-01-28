@@ -55,7 +55,7 @@ bool DSString::operator>(const char *str) {
 }
 
 
-DSString DSString::cleanPunctuation() {
+DSString DSString::cleanPunctuation() const {
     size_t cleaned_str_len = 0;
     for (int i = 0; i < this->length; ++i) {
         if (!ispunct(this->str[i])) ++cleaned_str_len;
@@ -68,7 +68,7 @@ DSString DSString::cleanPunctuation() {
     return {cleaned_str.get(), cleaned_str_len};
 }
 
-int DSString::getLength() {
+int DSString::getLength() const {
     return (int) this->length;
 }
 
@@ -76,7 +76,7 @@ char &DSString::operator[](const int index) {
     return this->str[index];
 }
 
-DSString DSString::substring(int start, int numChars) {
+DSString DSString::substring(int start, int numChars) const {
     return {this->str + start, (size_t) numChars};
 }
 

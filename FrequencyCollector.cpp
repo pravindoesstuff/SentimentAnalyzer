@@ -16,3 +16,7 @@ vector<DSString> FrequencyCollector::split_words(DSString sentence) {
     }
     return words;
 }
+
+unordered_map<DSString, tuple<int, int>> apply_weights(DSString filename) {
+
+}

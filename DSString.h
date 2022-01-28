@@ -90,15 +90,15 @@ public:
     /**
      * getLength() returns the number (count) of characters in the string.
      **/
-    int getLength();
+    [[nodiscard]] int getLength() const;
 
     /**
      * cleanPunctuation() Returns a DSString with all punctuation removed
      **/
-    DSString cleanPunctuation();
+    [[nodiscard]] DSString cleanPunctuation() const;
 
     /**
-     * The substring method returns a string object that contains a
+     * The substring method returns a DSString object that contains a
      * sequence of characters from this string object.
      *
      * param start - the index of where to start
@@ -106,13 +106,13 @@ public:
      *    the substring
      * @return a DSString object containing the requested substring
      **/
-    DSString substring(int start, int numChars);
+    [[nodiscard]] DSString substring(int start, int numChars) const;
 
     /**
      * the c_str function returns a null-terminated c-string holding the
      * contents of this object.
      **/
-    char *c_str();
+    [[nodiscard]] char *c_str();
 
     /**
      * Overloaded stream insertion operator to print the contents of this
