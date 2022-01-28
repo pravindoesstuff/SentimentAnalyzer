@@ -7,8 +7,7 @@
 
 using std::unique_ptr;
 
-DSString::DSString(const char *str, size_t length) {
-    this->length = length;
+DSString::DSString(const char *str, size_t length) : length(length) {
     this->str = new char[this->length];
     memcpy(this->str, str, this->length);
 }
