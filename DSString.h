@@ -14,7 +14,7 @@ private:
 
 
     char *str;
-    const size_t length;
+    size_t length;
     /**
      *  You will need to add some private data members here.
      *  This is up to your discretion.  However, we **strongly**
@@ -85,12 +85,12 @@ public:
      * Subscript operator to access a particular character of a DSString object
      * @return the character requested by reference
      */
-    char &operator[](const int);
+    char &operator[](size_t);
 
     /**
      * getLength() returns the number (count) of characters in the string.
      **/
-    [[nodiscard]] int getLength() const;
+    [[nodiscard]] size_t getLength() const;
 
     /**
      * cleanPunctuation() Returns a DSString with all punctuation removed
@@ -106,13 +106,17 @@ public:
      *    the substring
      * @return a DSString object containing the requested substring
      **/
-    [[nodiscard]] DSString substring(int start, int numChars) const;
+    [[nodiscard]] DSString substring(size_t start, size_t numChars) const;
+
+    [[nodiscard]] size_t find(char c);
 
     /**
      * the c_str function returns a null-terminated c-string holding the
      * contents of this object.
      **/
     [[nodiscard]] char *c_str();
+
+    [[nodiscard]] uint as_uint();
 
     /**
      * Overloaded stream insertion operator to print the contents of this

@@ -6,13 +6,12 @@
 #include <memory>
 
 using std::unique_ptr;
-
 DSString::DSString(const char *str, size_t length) : length(length) {
     this->str = new char[this->length];
     memcpy(this->str, str, this->length);
 }
 
-DSString::DSString() : DSString({}, 0) {}
+DSString::DSString() : DSString("", 0) {}
 
 DSString::DSString(const char *str) : DSString(str, strlen(str)) {}
 
@@ -28,7 +27,11 @@ DSString &DSString::operator=(const char *str) {
 }
 
 DSString &DSString::operator=(const DSString &ds_string) {
-    if (this != &ds_string) *this = DSString(ds_string);
+    if (this != &ds_string){
+        this->length = ds_string.length;
+        this->str = new char[this->length];
+        memcpy(this->str, ds_string.str, this->length);
+    }
     return *this;
 }
 
@@ -68,16 +71,21 @@ DSString DSString::cleanPunctuation() const {
     return {cleaned_str.get(), cleaned_str_len};
 }
 
-int DSString::getLength() const {
-    return (int) this->length;
+/// Unsafe when c does not exist in the str.
+size_t DSString::find(char c) {
+    return (char *) memchr(this->str, c, this->length) - this->str;
 }
 
-char &DSString::operator[](const int index) {
+size_t DSString::getLength() const {
+    return this->length;
+}
+
+char &DSString::operator[](const size_t index) {
     return this->str[index];
 }
 
-DSString DSString::substring(int start, int numChars) const {
-    return {this->str + start, (size_t) numChars};
+DSString DSString::substring(size_t start, size_t numChars) const {
+    return {this->str + start, std::min(numChars, this->length - start)};
 }
 
 // This leaks the char[] and should be avoided and currently does not guarantee null termination
@@ -88,4 +96,13 @@ char *DSString::c_str() {
 // Referenced from: https://www.cplusplus.com/reference/ostream/ostream/write/
 std::ostream &operator<<(std::ostream &os, const DSString &ds_string) {
     return os.write(ds_string.str, (int) ds_string.length);
+}
+
+uint DSString::as_uint() {
+    uint result = 0;
+    for (int i = 0; i < this->length; ++i) {
+        result *= 10;
+        result += this->str[i] - '0';
+    }
+    return result;
 }
