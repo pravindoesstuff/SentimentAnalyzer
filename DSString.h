@@ -7,14 +7,12 @@
 
 #include <iostream>
 #include <cstring>
+#include <memory>
 
 class DSString {
 
 private:
-
-
     char *str;
-    size_t length;
     /**
      *  You will need to add some private data members here.
      *  This is up to your discretion.  However, we **strongly**
@@ -33,8 +31,8 @@ private:
      *    the c-string functions.
      **/
 
-    /// Private constructor to unsafely char[] pointers into DSString
-    DSString(const char *str, size_t length);
+private:
+    DSString(size_t);
 
 public:
 
@@ -73,13 +71,13 @@ public:
      *
      **/
 
-    bool operator==(const char *);
+    bool operator==(const char *) const;
 
-    bool operator==(const DSString &);
+    bool operator==(const DSString &) const;
 
-    bool operator>(const DSString &);
+    bool operator>(const DSString &) const;
 
-    bool operator>(const char *);
+    bool operator>(const char *) const;
 
     /**
      * Subscript operator to access a particular character of a DSString object
@@ -114,9 +112,9 @@ public:
      * the c_str function returns a null-terminated c-string holding the
      * contents of this object.
      **/
-    [[nodiscard]] char *c_str();
+    [[nodiscard]] char *c_str() const;
 
-    [[nodiscard]] uint as_uint();
+    [[nodiscard]] unsigned int as_uint();
 
     /**
      * Overloaded stream insertion operator to print the contents of this
@@ -132,6 +130,14 @@ public:
     //semester progresses.
 
 };
+namespace std {
+    template<>
+    struct hash<DSString> {
+        std::size_t operator()(const DSString &ds_string) const {
+            return hash<basic_string<char>>()(ds_string.c_str());
+        }
+    };
+}
 
 
 #endif //PA01_SENTIMENT_DSSTRING_H

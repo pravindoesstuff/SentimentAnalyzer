@@ -9,9 +9,10 @@
 #include "DSString.h"
 
 class Tweet {
-private:
+public:
     uint32_t id;
     DSString tweet_body;
+    bool is_positive;
 public:
     Tweet(DSString data_line);
 };

@@ -3,19 +3,18 @@
 //
 
 #include "DSString.h"
-#include <memory>
 
 using std::unique_ptr;
-DSString::DSString(const char *str, size_t length) : length(length) {
-    this->str = new char[this->length];
-    memcpy(this->str, str, this->length);
+
+DSString::DSString(size_t alloc_size) : str(new char[alloc_size + 1]) { str[alloc_size] = '\0'; }
+
+DSString::DSString() : DSString("") {}
+
+DSString::DSString(const char *str) : DSString(strlen(str) + 1) {
+    strcpy(this->str, str);
 }
 
-DSString::DSString() : DSString("", 0) {}
-
-DSString::DSString(const char *str) : DSString(str, strlen(str)) {}
-
-DSString::DSString(const DSString &ds_string) : DSString(ds_string.str, ds_string.length) {}
+DSString::DSString(const DSString &ds_string) : DSString(ds_string.str) {}
 
 DSString::~DSString() {
     delete[] this->str;
@@ -27,57 +26,56 @@ DSString &DSString::operator=(const char *str) {
 }
 
 DSString &DSString::operator=(const DSString &ds_string) {
-    if (this != &ds_string){
-        this->length = ds_string.length;
-        this->str = new char[this->length];
-        memcpy(this->str, ds_string.str, this->length);
+    if (this != &ds_string) {
+        this->str = new char[ds_string.getLength() + 1];
+        strcpy(this->str, ds_string.str);
     }
     return *this;
 }
 
 DSString DSString::operator+(const DSString &ds_string) {
-    DSString complete_ds_string(this->str, this->length + ds_string.length);
-    memcpy(complete_ds_string.str + this->length, ds_string.str, ds_string.length);
+    DSString complete_ds_string(this->getLength() + ds_string.getLength());
+    strcpy(complete_ds_string.str, this->str);
+    strcat(complete_ds_string.str, ds_string.str);
     return complete_ds_string;
 }
 
-bool DSString::operator==(const char *str) {
-    return !memcmp(this->str, str, this->length);
+bool DSString::operator==(const char *str) const {
+    return !strcmp(this->str, str);
 }
 
-bool DSString::operator==(const DSString &ds_string) {
+bool DSString::operator==(const DSString &ds_string) const {
     return *this == ds_string.str;
 }
 
-bool DSString::operator>(const DSString &ds_string) {
+bool DSString::operator>(const DSString &ds_string) const {
     return *this > ds_string.str;
 }
 
-bool DSString::operator>(const char *str) {
-    return memcmp(this->str, str, this->length) > 0;
+bool DSString::operator>(const char *str) const {
+    return strcmp(this->str, str) > 0;
 }
 
 
 DSString DSString::cleanPunctuation() const {
     size_t cleaned_str_len = 0;
-    for (int i = 0; i < this->length; ++i) {
-        if (!ispunct(this->str[i])) ++cleaned_str_len;
+    for (char *c = this->str; *c != '\0'; ++c) {
+        if (!ispunct(*c)) ++cleaned_str_len;
     }
-    unique_ptr<char> cleaned_str(new char[cleaned_str_len]);
-    char *cleaned_str_ptr = cleaned_str.get();
-    for (int i = 0; i < this->length; ++i) {
-        if (!ispunct(this->str[i])) *cleaned_str_ptr++ = this->str[i];
+    DSString cleaned_str(cleaned_str_len);
+    char *cleaned_str_ptr = cleaned_str.str;
+    for (char *c = this->str; *c != '\0'; ++c) {
+        if (!ispunct(*c)) *cleaned_str_ptr++ = (char) tolower(*c);
     }
-    return {cleaned_str.get(), cleaned_str_len};
+    return {cleaned_str};
 }
 
-/// Unsafe when c does not exist in the str.
 size_t DSString::find(char c) {
-    return (char *) memchr(this->str, c, this->length) - this->str;
+    return (char *) strchr(this->str, c) - this->str;
 }
 
 size_t DSString::getLength() const {
-    return this->length;
+    return strlen(this->str);
 }
 
 char &DSString::operator[](const size_t index) {
@@ -85,24 +83,25 @@ char &DSString::operator[](const size_t index) {
 }
 
 DSString DSString::substring(size_t start, size_t numChars) const {
-    return {this->str + start, std::min(numChars, this->length - start)};
+    DSString ds_string(numChars);
+    strncpy(ds_string.str, this->str + start, numChars);
+    return ds_string;
 }
 
-// This leaks the char[] and should be avoided and currently does not guarantee null termination
-char *DSString::c_str() {
+char *DSString::c_str() const {
     return this->str;
 }
 
 // Referenced from: https://www.cplusplus.com/reference/ostream/ostream/write/
 std::ostream &operator<<(std::ostream &os, const DSString &ds_string) {
-    return os.write(ds_string.str, (int) ds_string.length);
+    return os << ds_string.str;
 }
 
-uint DSString::as_uint() {
-    uint result = 0;
-    for (int i = 0; i < this->length; ++i) {
+unsigned int DSString::as_uint() {
+    unsigned int result = 0;
+    for (char *c = this->str; *c != '\0'; ++c) {
         result *= 10;
-        result += this->str[i] - '0';
+        result += *c - '0';
     }
     return result;
 }
