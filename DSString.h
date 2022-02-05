@@ -91,9 +91,9 @@ public:
     [[nodiscard]] size_t getLength() const;
 
     /**
-     * cleanPunctuation() Returns a DSString with all punctuation removed
+     * Makes all letters lowercase and turns everything into spaces
      **/
-    [[nodiscard]] DSString cleanPunctuation() const;
+    void sanitize();
 
     /**
      * The substring method returns a DSString object that contains a

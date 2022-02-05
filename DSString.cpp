@@ -57,17 +57,10 @@ bool DSString::operator>(const char *str) const {
 }
 
 
-DSString DSString::cleanPunctuation() const {
-    size_t cleaned_str_len = 0;
+void DSString::sanitize() {
     for (char *c = this->str; *c != '\0'; ++c) {
-        if (!ispunct(*c)) ++cleaned_str_len;
+        *c = isalpha(*c) ? (char) tolower(*c) : ' ';
     }
-    DSString cleaned_str(cleaned_str_len);
-    char *cleaned_str_ptr = cleaned_str.str;
-    for (char *c = this->str; *c != '\0'; ++c) {
-        if (!ispunct(*c)) *cleaned_str_ptr++ = (char) tolower(*c);
-    }
-    return {cleaned_str};
 }
 
 size_t DSString::find(char c) {

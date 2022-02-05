@@ -14,7 +14,7 @@ public:
     DSString tweet_body;
     bool is_positive;
 public:
-    Tweet(DSString data_line);
+    explicit Tweet(DSString data_line);
 };
 
 

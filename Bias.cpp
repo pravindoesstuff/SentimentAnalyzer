@@ -5,13 +5,15 @@
 #include "Bias.h"
 
 void Bias::add_positive() {
-    ++positive;
+    weight += 1;
+    ++rankings;
 }
 
 void Bias::add_negative() {
-    ++negative;
+    weight += 0;
+    ++rankings;
 }
 
-double Bias::ratio() const {
-    return (double) positive / (double) negative;
+double Bias::average() const {
+    return (double) weight / (double) rankings;
 }

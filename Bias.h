@@ -8,11 +8,13 @@
 
 class Bias {
 private:
-    unsigned long positive, negative;
+    unsigned long weight = 0, rankings = 0;
 public:
     void add_negative();
+
     void add_positive();
-    [[nodiscard]] double ratio() const;
+
+    [[nodiscard]] double average() const;
 };
 
 

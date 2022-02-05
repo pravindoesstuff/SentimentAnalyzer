@@ -21,6 +21,6 @@ namespace FrequencyCollector {
 
     unordered_map<DSString, Bias> apply_weights(DSString);
 
-}; // namespace FrequencyCollector
+} // namespace FrequencyCollector
 
 #endif // PA01_SENTIMENT_FREQUENCYCOLLECTOR_H
