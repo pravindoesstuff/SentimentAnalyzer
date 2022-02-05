@@ -10,7 +10,7 @@ DSString::DSString(size_t alloc_size) : str(new char[alloc_size + 1]) { str[allo
 
 DSString::DSString() : DSString("") {}
 
-DSString::DSString(const char *str) : DSString(strlen(str) + 1) {
+DSString::DSString(const char *str) : DSString(strlen(str)) {
     strcpy(this->str, str);
 }
 
@@ -71,7 +71,7 @@ DSString DSString::cleanPunctuation() const {
 }
 
 size_t DSString::find(char c) {
-    return (char *) strchr(this->str, c) - this->str;
+    return strchr(this->str, c) - this->str;
 }
 
 size_t DSString::getLength() const {

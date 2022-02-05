@@ -32,7 +32,7 @@ private:
      **/
 
 private:
-    DSString(size_t);
+    explicit DSString(size_t);
 
 public:
 
@@ -130,6 +130,7 @@ public:
     //semester progresses.
 
 };
+//Reference: https://stackoverflow.com/questions/17016175/c-unordered-map-using-a-custom-class-type-as-the-key
 namespace std {
     template<>
     struct hash<DSString> {

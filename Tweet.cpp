@@ -3,6 +3,7 @@
 //
 
 #include "Tweet.h"
+using namespace std;
 
 Tweet::Tweet(DSString data_line) {
     DSString id_str = data_line.substring(0, 10);
