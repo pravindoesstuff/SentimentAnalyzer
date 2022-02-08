@@ -12,7 +12,8 @@
 using std::unordered_map;
 
 namespace Classifier {
-    double string_weight(DSString ds_string, unordered_map <DSString, Bias> model);
+    double string_weight(DSString ds_string, const unordered_map<DSString, Bias> &model);
+
     unordered_map<size_t, bool> classify_tweets(DSString filename);
 }
 
