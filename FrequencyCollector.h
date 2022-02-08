@@ -19,7 +19,7 @@ namespace FrequencyCollector {
 /// Returns a DSString[] of all the separated words within another DSString
     vector<DSString> split_words(DSString);
 
-    unordered_map<DSString, Bias> apply_weights(DSString);
+    unordered_map<DSString, Bias> apply_weights(const DSString&);
 
 } // namespace FrequencyCollector
 

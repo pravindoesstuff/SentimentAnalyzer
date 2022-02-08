@@ -4,6 +4,10 @@
 
 #include "Classifier.h"
 #include "FrequencyCollector.h"
+#include <iostream>
+#include <fstream>
+
+using std::ifstream;
 
 double Classifier::string_weight(DSString ds_string, const unordered_map<DSString, Bias> &model) {
     ds_string.sanitize();
@@ -21,6 +25,16 @@ double Classifier::string_weight(DSString ds_string, const unordered_map<DSStrin
     return rank_total / rank_count;
 }
 
-unordered_map<size_t, bool> Classifier::classify_tweets(DSString filename) {
-
+unordered_map<uint32_t, bool>
+Classifier::classify_tweets(const DSString &filename, const unordered_map<DSString, Bias> &model) {
+    unordered_map<uint32_t, bool> ranks;
+    ifstream file(filename.c_str());
+    file.ignore(DATA_SIZE, '\n');
+    char line[DATA_SIZE];
+    while (file.getline(line, DATA_SIZE) && line[0] != '\0') {
+        Tweet t(false, line);
+        double weight = string_weight(t.tweet_body, model);
+        ranks[t.id] = weight > 0.5;
+    }
+    return ranks;
 }

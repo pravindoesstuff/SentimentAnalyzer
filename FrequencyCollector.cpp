@@ -28,13 +28,13 @@ void add_weights(unordered_map<DSString, Bias> &weight_map, const Tweet &tweet) 
     }
 }
 
-unordered_map<DSString, Bias> FrequencyCollector::apply_weights(DSString filename) {
+unordered_map<DSString, Bias> FrequencyCollector::apply_weights(const DSString& filename) {
     ifstream file(filename.c_str());
     unordered_map<DSString, Bias> weights(20000);
     file.ignore(DATA_SIZE, '\n');
     char line[DATA_SIZE];
     while (file.getline(line, DATA_SIZE) && line[0] != '\0') {
-        add_weights(weights, Tweet(line));
+        add_weights(weights, Tweet(true, line));
     }
     return weights;
 }

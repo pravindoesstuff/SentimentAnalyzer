@@ -14,7 +14,9 @@ public:
     DSString tweet_body;
     bool is_positive;
 public:
-    explicit Tweet(DSString data_line);
+    Tweet(bool, DSString);
+
+    Tweet(bool is_positive, uint32_t id);
 };
 
 

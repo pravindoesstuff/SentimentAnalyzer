@@ -91,7 +91,7 @@ public:
     [[nodiscard]] size_t getLength() const;
 
     /**
-     * Makes all letters lowercase and turns everything into spaces
+     * Makes all letters lowercase and turns everything else into spaces
      **/
     void sanitize();
 
