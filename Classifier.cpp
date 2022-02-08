@@ -9,10 +9,13 @@ double Classifier::string_weight(DSString ds_string, const unordered_map<DSStrin
     ds_string.sanitize();
     vector<DSString> words = FrequencyCollector::split_words(ds_string);
     double rank_total = 0;
-    int rank_count = 0;
+    double rank_count = 0;
     for (const DSString &word: words) {
-        if (model.find(word) != model.end()) {
-            rank_total += model.at(word).average();
+        if (model.count(word)) {
+            double weight = model.at(word).average();
+            double multiplier = std::abs(weight - 0.5); //Reward polarizing words, penalize generalized words
+            rank_total += weight * multiplier;
+            rank_count += multiplier;
         }
     }
     return rank_total / rank_count;
