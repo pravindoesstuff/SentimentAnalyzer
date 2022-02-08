@@ -15,6 +15,8 @@ namespace Classifier {
     double string_weight(DSString ds_string, const unordered_map<DSString, Bias> &model);
 
     unordered_map<uint32_t, bool> classify_tweets(const DSString &, const unordered_map<DSString, Bias> &);
+
+    double compute_accuracy(const DSString &, const unordered_map<uint32_t, bool> &);
 }
 
 

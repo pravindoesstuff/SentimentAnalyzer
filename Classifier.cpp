@@ -38,3 +38,18 @@ Classifier::classify_tweets(const DSString &filename, const unordered_map<DSStri
     }
     return ranks;
 }
+
+double
+Classifier::compute_accuracy(const DSString &sentiment_file, const unordered_map<uint32_t, bool> &classifications) {
+    ifstream file(sentiment_file.c_str());
+    file.ignore(DATA_SIZE, '\n');
+    char line[DATA_SIZE];
+    size_t accurate_hits = 0, total = 0;
+    while (file.getline(line, DATA_SIZE) && line[0] != '\0') {
+        bool sentiment = line[0] - '0';
+        uint32_t id = DSString(line).substring(2, 10).as_uint();
+        accurate_hits += classifications.at(id) == sentiment;
+        ++total;
+    }
+    return (double) accurate_hits / (double) total;
+}
