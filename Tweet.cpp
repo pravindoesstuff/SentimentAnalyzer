@@ -20,5 +20,3 @@ Tweet::Tweet(bool has_sentiment, DSString data_line) {
                                                            data_line.getLength() - 6);
     }
 }
-
-Tweet::Tweet(bool is_positive, uint32_t id) : is_positive(is_positive), id(id) {}
