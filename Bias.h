@@ -13,7 +13,7 @@ public:
     void add_negative();
 
     void add_positive();
-
+    /// Returns the leanings of the bias, 0 leaning negative and 1 leaning positive
     [[nodiscard]] double average() const;
 };
 

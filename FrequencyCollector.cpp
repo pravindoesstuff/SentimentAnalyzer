@@ -21,6 +21,7 @@ vector<DSString> FrequencyCollector::split_words(DSString sentence) {
     return words;
 }
 
+/// Intakes an unordered map and tweet. The tweet body will be be processed split_words, then will add or mutate words on the unordered map based on the sentiment of the tweet and the words within it
 void add_weights(unordered_map<DSString, Bias> &weight_map, const Tweet &tweet) {
     vector<DSString> words = FrequencyCollector::split_words(tweet.tweet_body);
     for (const DSString &w: words) {

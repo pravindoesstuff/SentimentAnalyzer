@@ -16,9 +16,10 @@ using std::unordered_map;
 
 const uint16_t DATA_SIZE = 512;
 namespace FrequencyCollector {
-/// Returns a DSString[] of all the separated words within another DSString
+    /// Intakes DSString will apply sanitization, then tokenizes with a space delimiter, the result is a vector with every token
     vector<DSString> split_words(DSString);
 
+    /// Goes through the file referenced by `filename` and will return an unordered map with the appropriate weights of all the words in the file of tweets
     unordered_map<DSString, Bias> apply_weights(const DSString&);
 
 } // namespace FrequencyCollector
