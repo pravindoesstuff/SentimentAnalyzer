@@ -32,7 +32,7 @@ private:
      **/
 
 private:
-    explicit DSString(size_t);
+    explicit DSString(const size_t &);
 
 public:
 
@@ -47,6 +47,8 @@ public:
 
     DSString(const DSString &);
 
+    DSString(DSString &&) noexcept;
+
     ~DSString();
 
     /**
@@ -56,11 +58,13 @@ public:
 
     DSString &operator=(const DSString &);
 
+    DSString &operator=(DSString &&) noexcept;
+
     /**
      * Overloaded non-modifying string concat
      * @return
      */
-    DSString operator+(const DSString &);
+    DSString operator+(const DSString &) const;
 
     /**
      * Standard relational operators.  Feel free to add additional.
@@ -83,7 +87,7 @@ public:
      * Subscript operator to access a particular character of a DSString object
      * @return the character requested by reference
      */
-    char &operator[](size_t);
+    char &operator[](const size_t &);
 
     /**
      * getLength() returns the number (count) of characters in the string.
@@ -104,9 +108,9 @@ public:
      *    the substring
      * @return a DSString object containing the requested substring
      **/
-    [[nodiscard]] DSString substring(size_t start, size_t numChars) const;
+    [[nodiscard]] DSString substring(const size_t &start, const size_t &numChars) const;
 
-    [[nodiscard]] size_t find(char c);
+    [[nodiscard]] size_t find(const char &c) const;
 
     /**
      * the c_str function returns a null-terminated c-string holding the
@@ -114,7 +118,7 @@ public:
      **/
     [[nodiscard]] char *c_str() const;
 
-    [[nodiscard]] unsigned int as_uint();
+    [[nodiscard]] unsigned int as_uint() const;
 
     /**
      * Overloaded stream insertion operator to print the contents of this

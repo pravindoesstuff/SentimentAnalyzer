@@ -9,10 +9,10 @@
 #include "catch.hpp"
 #include "DSString.h"
 
-TEST_CASE("Assignment operator assigns correctly") {
-    DSString ds_string = "Hello World";
-    SECTION("Test for ")
-}
+//TEST_CASE("Assignment operator assigns correctly") {
+//    DSString ds_string = "Hello World";
+//    SECTION("Test for ")
+//}
 
 
 
