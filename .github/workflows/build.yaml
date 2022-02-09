@@ -1,15 +1,15 @@
 name: pa01_sentiment
 
-on: [ push ]
+on: [push]
 
 env:
   EXE_NAME: pa01_sentiment
-    ### ***** Students!  Put the name of the input files and output files here.
-    ###   List them in the order that they need to appear in Argv param of main.
-    ###   Output Files will follow input files
-    ###   Note: These should be the actual names of the files.  No double quotes
-    INPUT_FILES: data/train_dataset_20k.csv data/test_dataset_10k.csv data/test_dataset_sentiment_10k.csv
-    OUTPUT_FILES: data/output.csv
+  ### ***** Students!  Put the name of the input files and output files here.
+  ###   List them in the order that they need to appear in Argv param of main.
+  ###   Output Files will follow input files
+  ###   Note: These should be the actual names of the files.  No double quotes
+  INPUT_FILES: data/train_dataset_20k.csv data/test_dataset_10k.csv data/test_dataset_sentiment_10k.csv
+  OUTPUT_FILES: data/output.csv
 
 jobs:
   build:
@@ -35,7 +35,7 @@ jobs:
 
       - name: Create build environment
         #run: cmake -E make_directory ${{runner.workspace}}/build
-        run: mkdir ${{runner.workspace}}/build
+        run:  mkdir ${{runner.workspace}}/build
 
       - name: Configure the build
         # Use a bash shell so we can use the same syntax for environment variable
