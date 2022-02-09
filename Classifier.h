@@ -16,7 +16,8 @@ namespace Classifier {
 
     unordered_map<uint32_t, bool> classify_tweets(const DSString &, const unordered_map<DSString, Bias> &);
 
-    double compute_accuracy(const DSString &, const unordered_map<uint32_t, bool> &);
+    double write_accuracy(const DSString &sentiment_file, const DSString &output_filename,
+                          unordered_map<uint32_t, bool> &classifications);
 }
 
 

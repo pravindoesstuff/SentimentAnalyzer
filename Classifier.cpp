@@ -8,12 +8,12 @@
 #include <fstream>
 
 using std::ifstream;
+using std::ofstream;
 
 double Classifier::string_weight(DSString ds_string, const unordered_map<DSString, Bias> &model) {
     ds_string.sanitize();
     vector<DSString> words = FrequencyCollector::split_words(ds_string);
-    double rank_total = 0;
-    double rank_count = 0;
+    double rank_total = 0, rank_count = 0;
     for (const DSString &word: words) {
         if (model.count(word)) {
             double weight = model.at(word).average();
@@ -40,16 +40,24 @@ Classifier::classify_tweets(const DSString &filename, const unordered_map<DSStri
 }
 
 double
-Classifier::compute_accuracy(const DSString &sentiment_file, const unordered_map<uint32_t, bool> &classifications) {
-    ifstream file(sentiment_file.c_str());
-    file.ignore(DATA_SIZE, '\n');
+Classifier::write_accuracy(const DSString &sentiment_file, const DSString &output_filename,
+                           unordered_map<uint32_t, bool> &classifications) {
+    ifstream input_file(sentiment_file.c_str());
+    input_file.ignore(DATA_SIZE, '\n');
     char line[DATA_SIZE];
     size_t accurate_hits = 0, total = 0;
-    while (file.getline(line, DATA_SIZE) && line[0] != '\0') {
+    vector<uint32_t> misses;
+    while (input_file.getline(line, DATA_SIZE) && line[0] != '\0') {
         bool sentiment = line[0] - '0';
         uint32_t id = DSString(line).substring(2, 10).as_uint();
-        accurate_hits += classifications.at(id) == sentiment;
+        bool result = classifications.at(id) == sentiment;
         ++total;
+        accurate_hits += result;
+        if (!result) misses.emplace_back(id);
     }
-    return (double) accurate_hits / (double) total;
+    double accuracy = (double) accurate_hits / (double) total;
+    ofstream output_file(output_filename.c_str());
+    output_file << accuracy << '\n';
+    for (uint32_t id: misses) output_file << id << '\n'; //write all the missed ids to the output file
+    return accuracy;
 }

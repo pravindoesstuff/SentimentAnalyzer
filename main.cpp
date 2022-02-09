@@ -9,8 +9,9 @@ using namespace std;
 using FrequencyCollector::apply_weights;
 
 int main(int argc, char **argv) {
-    auto model = apply_weights("data/train_dataset_20k.csv");
-    auto classification = Classifier::classify_tweets("data/test_dataset_10k.csv", model);
-    double accuracy = Classifier::compute_accuracy("data/test_dataset_sentiment_10k.csv", classification);
+    if (argc == 1) return -1;
+    auto model = apply_weights(argv[1]);
+    auto classification = Classifier::classify_tweets(argv[2], model);
+    double accuracy = Classifier::write_accuracy(argv[3], argv[4], classification);
     cout << accuracy << endl;
 }
