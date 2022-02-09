@@ -4,8 +4,6 @@
 
 #include "DSString.h"
 
-using std::unique_ptr;
-
 DSString::DSString(size_t alloc_size) : str(new char[alloc_size + 1]) { str[alloc_size] = '\0'; }
 
 DSString::DSString() : DSString("") {}

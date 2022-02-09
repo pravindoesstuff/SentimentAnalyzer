@@ -15,5 +15,9 @@ void Bias::add_negative() {
 }
 
 double Bias::average() const {
-    return (double) weight / (double) rankings;
+    double average = (double) weight / (double) rankings;
+    // Uncertain predictions (under a threshold) should return 0.5, which will cause them to be culled
+    // This will greatly help with removing uncommon words that can tip averages
+    if (rankings < 7) return 0.5; // 7 Was found to be a good value based on the default 20k training set
+    else return average;
 }
