@@ -1,6 +1,6 @@
 name: pa01_sentiment
 
-on: [push]
+on: [ push ]
 
 env:
   EXE_NAME: pa01_sentiment
@@ -35,7 +35,7 @@ jobs:
 
       - name: Create build environment
         #run: cmake -E make_directory ${{runner.workspace}}/build
-        run:  mkdir ${{runner.workspace}}/build
+        run: mkdir ${{runner.workspace}}/build
 
       - name: Configure the build
         # Use a bash shell so we can use the same syntax for environment variable
@@ -54,6 +54,12 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         shell: bash
         run: ./$EXE_NAME $INPUT_FILES $OUTPUT_FILES
+        #        run: ./$EXE_NAME
+
+      - name: Run tests
+        working-directory: ${{runner.workspace}}/build
+        shell: bash
+        run: ./$EXE_NAME
         #        run: ./$EXE_NAME
 
       - name: Copy output files to artifact directory
