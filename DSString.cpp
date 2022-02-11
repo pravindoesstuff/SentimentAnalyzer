@@ -76,6 +76,19 @@ void DSString::sanitize() {
     }
 }
 
+void DSString::remove_adjacent_letters() {
+    char *current_ptr = this->str;
+    char previous_char = '\0';
+    for (char *c = this->str; *c != '\0'; ++c) {
+        if (*c != previous_char) {
+            previous_char = *c;
+            *current_ptr = *c;
+            ++current_ptr;
+        }
+    }
+    *current_ptr = '\0';
+}
+
 size_t DSString::find(const char &c) const {
     return strchr(this->str, c) - this->str;
 }

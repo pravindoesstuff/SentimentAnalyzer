@@ -99,6 +99,8 @@ public:
      **/
     void sanitize();
 
+    void remove_adjacent_letters();
+
     /**
      * The substring method returns a DSString object that contains a
      * sequence of characters from this string object.

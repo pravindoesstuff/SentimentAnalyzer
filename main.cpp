@@ -14,4 +14,7 @@ int main(int argc, char **argv) {
     auto model = apply_weights(argv[1]);
     auto classification = Classifier::classify_tweets(argv[2], model);
     cout << Classifier::write_accuracy(argv[3], argv[4], classification);
+//    DSString dsString = "Hhheeeeelllooo WRooookjjlld";
+//    dsString.remove_adjacent_letters();
+//    cout << dsString << endl;
 }

@@ -13,6 +13,7 @@ using std::ifstream;
 vector<DSString> FrequencyCollector::split_words(DSString sentence) {
     vector<DSString> words;
     sentence.sanitize();
+    sentence.remove_adjacent_letters();
     char *token = strtok(sentence.c_str(), " ");
     while (token) {
         words.emplace_back(token);
