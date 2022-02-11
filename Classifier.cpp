@@ -12,6 +12,7 @@ using std::ofstream;
 
 double Classifier::string_weight(DSString ds_string, const unordered_map<DSString, Bias> &model) {
     ds_string.sanitize();
+    ds_string.remove_adjacent_letters();
     vector<DSString> words = FrequencyCollector::split_words(ds_string);
     double rank_total = 0, rank_count = 0;
     for (const DSString &word: words) {

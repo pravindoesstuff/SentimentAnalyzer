@@ -19,6 +19,18 @@ TEST_CASE("DSString sanitizer works correctly") {
     REQUIRE(d == "h ll  w r d");
 }
 
+TEST_CASE("remove_adjacent_letters test") {
+    SECTION("No adjustments needed") {
+        DSString d = "lol i was there";
+        d.remove_adjacent_letters();
+        REQUIRE(d == "lol i was there");
+    }SECTION("adjustments needed") {
+        DSString d = "lollllll whaaaat arrree yooooouuuu doooiinnnnggggg";
+        d.remove_adjacent_letters();
+        REQUIRE(d == "lol what are you doing");
+    }
+}
+
 TEST_CASE("Assignment operations", "[DSString]") {
     DSString d = "Hello World";
     SECTION("Copy assignment operator") {

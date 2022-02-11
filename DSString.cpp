@@ -30,6 +30,7 @@ DSString &DSString::operator=(const char *str) {
 
 DSString &DSString::operator=(const DSString &ds_string) {
     if (this != &ds_string) {
+        delete[] this->str;
         this->str = new char[ds_string.getLength() + 1];
         strcpy(this->str, ds_string.str);
     }
@@ -74,6 +75,19 @@ void DSString::sanitize() {
     for (char *c = this->str; *c != '\0'; ++c) {
         *c = isalpha(*c) ? (char) tolower(*c) : ' ';
     }
+}
+
+void DSString::remove_adjacent_letters() {
+    char *current_ptr = this->str;
+    char previous_char = '\0';
+    for (char *c = this->str; *c != '\0'; ++c) {
+        if (*c != previous_char) {
+            previous_char = *c;
+            *current_ptr = *c;
+            ++current_ptr;
+        }
+    }
+    *current_ptr = '\0';
 }
 
 size_t DSString::find(const char &c) const {
