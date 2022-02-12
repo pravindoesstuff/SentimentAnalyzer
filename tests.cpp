@@ -19,6 +19,19 @@ TEST_CASE("DSString sanitizer works correctly") {
     REQUIRE(d == "h ll  w r d");
 }
 
+TEST_CASE("String concat functions correctly") {
+    SECTION("concat 3 strings") {
+        DSString dsString;
+        { //new dsString should hold "Hello World" even when the original DSStrings are out of scope
+            DSString a = "Hello";
+            DSString b = " ";
+            DSString c = "World";
+            dsString = a + b + c;
+        }
+        REQUIRE(dsString == "Hello World");
+    }
+}
+
 TEST_CASE("remove_adjacent_letters test") {
     SECTION("No adjustments needed") {
         DSString d = "lol i was there";
